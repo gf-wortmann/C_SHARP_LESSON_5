@@ -8,12 +8,28 @@ int[] CalcPairs ( int [] input)
     int [] rsl = new int [size];
     for (int i = 0; i < size; i++)
     {
-        if (i > input.Length / 2) rsl [i] = input[i]; else  rsl [i] = input [i] * input [input.Length - i - 1];
+        if (i == input.Length / 2) rsl [i] = input[i]; else  rsl [i] = input [i] * input [input.Length - i - 1];
     }
     return rsl;
 }
 
-int [] Arr = {1,2,3,4,5,6}; //new int [5];
+int [] RandomArray ( int num, int minValue, int maxValue)
+{
+    int [] result = new int [num];
+    for ( int i=0; i < num; i++)
+    {
+        Random R = new Random();
+        result [i] = R.Next(minValue, maxValue + 1);
+    } 
+    return result;
+}
+
+Random R = new Random();
+int Numbers = R.Next(5, 21);
+
+int [] Arr = new int [Numbers];
+Arr = RandomArray(Numbers, 0, 100);
+
 int [] Prod = CalcPairs ( Arr );
 
 Console.WriteLine(String.Join(", ", Arr));
