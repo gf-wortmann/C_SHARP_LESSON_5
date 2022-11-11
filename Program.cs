@@ -1,38 +1,45 @@
-﻿//Задача 36: Задайте одномерный массив, заполненный случайными числами. Найдите сумму элементов, стоящих на нечётных позициях.
-//
-//[3, 7, 23, 12] -> 19
-//[-4, -6, 89, 6] -> 0
+﻿//Задача 38: Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементов массива.
+//[3 7 22 2 78] -> 76
 //
 
-int Count_Odd_Sum ( int [] input)
+double Calc_Max_Min_Diff ( double [] input)
 {
-    int acc = 0;
-    for (int i = 0; i < input.Length; i++)
+    double min, max;
+    min = max = input [0];
+
+    for (int i = 1; i < input.Length; i++)
     {
-        acc += (i % 2 == 0) ? 0 : input[i];
+        min = (input [i] < min) ? input [i] : min;
+        max = (input [i] > max) ? input [i] : max;
     }
-    return acc;
+    return max - min;
 }
 
-int [] RandomArray ( int num, int minValue, int maxValue)
+double [] RandomArray ( int num, double minValue, double maxValue)
 {
-    int [] result = new int [num];
+    double [] result = new double [num];
     for ( int i=0; i < num; i++)
     {
         Random R = new Random();
-        result [i] = R.Next(minValue, maxValue + 1);
+        result [i] = R.NextDouble() * maxValue + minValue / 2;
     } 
     return result;
+}
+
+void WriteArray (double [] input)
+{
+    Console.Write ($"{input [0]:0.000}");
+    for (int i = 1; i < input.Length; i++)Console.Write($", {input [i]:0.000}");
+    Console.WriteLine();
 }
 
 Random R = new Random();
 int Numbers = R.Next(10, 31);
 
-int [] Arr = new int [Numbers];
-Arr = RandomArray(Numbers, -99, 99);
-//int [] Arr = {4, -6, 89, 6};
+double [] Arr = new double [Numbers];
+Arr = RandomArray(Numbers, -100, 100);
+//float [] Arr = {3, 7, 22, 2, 78};
+double Max_Min_Diff = Calc_Max_Min_Diff ( Arr );
 
-int numEven = Count_Odd_Sum ( Arr );
-
-Console.WriteLine(String.Join(", ", Arr));
-Console.WriteLine($"Сумма нечетных чисел в массиве = {numEven}");
+WriteArray (Arr);
+Console.WriteLine($"Разность между максимальным и минимальным числами в массиве = {Max_Min_Diff:0.000}");
