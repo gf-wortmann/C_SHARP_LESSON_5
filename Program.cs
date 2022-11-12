@@ -1,45 +1,77 @@
-﻿//Задача 38: Задайте массив вещественных чисел. Найдите разницу между максимальным и минимальным элементов массива.
-//[3 7 22 2 78] -> 76
+﻿//Задача * Сортировка методом пузырька (сокращенная - максимальное значение, найденное на текущей итерации, не рассматривается в последующих итерациях) 
+//
 //
 
-double Calc_Max_Min_Diff ( double [] input)
-{
-    double min, max;
-    min = max = input [0];
+void Bubble_Sorting(int[] input, bool Ascending)
+        {
+            int buffer;//, buffer_low;
+            
+            for (int i = 0; i < input.Length; i++)
+            {
+                for (int j = 0; j < input.Length - 1; j++)
+                {
+                    if (((input[j] > input[j + 1]) && Ascending == true) || ((input[j] < input[j + 1]) && Ascending == false))
+                    {
+                        buffer = input[j];
+                        input[j] = input[j + 1];
+                        input[j + 1] = buffer;
+                    }
+                }            
+            }
+        }
 
-    for (int i = 1; i < input.Length; i++)
-    {
-        min = (input [i] < min) ? input [i] : min;
-        max = (input [i] > max) ? input [i] : max;
-    }
-    return max - min;
-}
+void Short_Sorting(int[] input, bool Ascending)
+        {
+            int buffer;//, buffer_low;
+            
+            for (int i = 0; i < input.Length; i++)
+            {
+                for (int j = i+1; j < input.Length; j++)
+                {
+                    if (((input[i] > input[j]) && Ascending == true) || ((input[i] < input[j]) && Ascending == false))
+                    {
+                        buffer = input[i];
+                        input[i] = input[j];
+                        input[j] = buffer;
+                    }
+                }            
+            }
+        }
 
-double [] RandomArray ( int num, double minValue, double maxValue)
+int [] RandomArray ( int num, int minValue, int maxValue)
 {
-    double [] result = new double [num];
+    int [] result = new int [num];
     for ( int i=0; i < num; i++)
     {
         Random R = new Random();
-        result [i] = R.NextDouble() * maxValue + minValue / 2;
+        result [i] = R.Next(minValue, maxValue + 1);// * maxValue + minValue / 2;
     } 
     return result;
 }
 
-void WriteArray (double [] input)
-{
-    Console.Write ($"{input [0]:0.000}");
-    for (int i = 1; i < input.Length; i++)Console.Write($", {input [i]:0.000}");
-    Console.WriteLine();
-}
-
 Random R = new Random();
-int Numbers = R.Next(10, 31);
+int Numbers = R.Next(10, 21);
 
-double [] Arr = new double [Numbers];
+int [] Arr = new int [Numbers];
 Arr = RandomArray(Numbers, -100, 100);
-//float [] Arr = {3, 7, 22, 2, 78};
-double Max_Min_Diff = Calc_Max_Min_Diff ( Arr );
 
-WriteArray (Arr);
-Console.WriteLine($"Разность между максимальным и минимальным числами в массиве = {Max_Min_Diff:0.000}");
+Console.Clear();
+Console.WriteLine($"\n Non sorted array");
+Console.Write(String.Join(", ", Arr));
+
+Short_Sorting(Arr, false);
+Console.WriteLine($"\n\n Array Sorted in NonAscending order by Shortened Algorithm");
+Console.Write(String.Join(", ", Arr));
+
+Short_Sorting(Arr, true);
+Console.WriteLine($"\n\n Array Sorted in NonDescending order by Shortened Algorithm");
+Console.Write(String.Join(", ", Arr));
+
+Bubble_Sorting(Arr, false);
+Console.WriteLine($"\n\n Array Sorted in NonAscending order by Bubble Algorithm");
+Console.Write(String.Join(", ", Arr));
+
+Bubble_Sorting(Arr, true);
+Console.WriteLine($"\n\n Array Sorted in NonDescending order by Bubble Algorithm");
+Console.Write(String.Join(", ", Arr));
+
